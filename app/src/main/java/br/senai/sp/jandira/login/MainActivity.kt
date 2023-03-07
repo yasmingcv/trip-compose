@@ -86,14 +86,13 @@ fun LoginScreen() {
                         value = "",
                         onValueChange = {},
                         shape = RoundedCornerShape(18.dp),
+                        leadingIcon = {Icon(
+                            painter = painterResource(id = R.drawable.baseline_email_24),
+                            contentDescription = null,
+                            tint = Color(207, 6, 240)
+                        )},
                         label = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_email_24),
-                                contentDescription = null,
-                                tint = Color(207, 6, 240)
-                            )
                             Text(
-                                modifier = Modifier.padding(start = 30.dp),
                                 text = stringResource(id = R.string.email)
                             )
                         }
@@ -105,14 +104,13 @@ fun LoginScreen() {
                         value = "",
                         onValueChange = {},
                         shape = RoundedCornerShape(18.dp),
+                        leadingIcon = {Icon(
+                            painter = painterResource(id = R.drawable.baseline_lock_24),
+                            contentDescription = null,
+                            tint = Color(207, 6, 240)
+                        )},
                         label = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_lock_24),
-                                contentDescription = null,
-                                tint = Color(207, 6, 240)
-                            )
                             Text(
-                                modifier = Modifier.padding(start = 30.dp),
                                 text = stringResource(id = R.string.password)
                             )
                         }
