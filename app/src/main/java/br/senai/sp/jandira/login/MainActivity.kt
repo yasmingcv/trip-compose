@@ -42,7 +42,8 @@ fun LoginScreen() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
 
             Row(
@@ -53,27 +54,24 @@ fun LoginScreen() {
                 Surface(
                     modifier = Modifier
                         .height(40.dp)
-                        .width(100.dp),
+                        .width(120.dp),
                     color = Color(207, 6, 240),
-                    shape = RoundedCornerShape(bottomStart = 12.dp)
+                    shape = RoundedCornerShape(bottomStart = 16.dp)
                 ) {}
             }
 
-
-            Spacer(modifier = Modifier.height(120.dp))
-
-
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = stringResource(id = R.string.login),
-                    fontSize = 50.sp,
+                    fontSize = 48.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(207, 6, 240)
                 )
                 Text(
                     text = stringResource(id = R.string.please_sign_in),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.ExtraLight
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(160, 156, 156)
                 )
 
                 Spacer(modifier = Modifier.height(45.dp))
@@ -85,12 +83,14 @@ fun LoginScreen() {
                             .fillMaxWidth(),
                         value = "",
                         onValueChange = {},
-                        shape = RoundedCornerShape(18.dp),
-                        leadingIcon = {Icon(
-                            painter = painterResource(id = R.drawable.baseline_email_24),
-                            contentDescription = null,
-                            tint = Color(207, 6, 240)
-                        )},
+                        shape = RoundedCornerShape(16.dp),
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_email_24),
+                                contentDescription = null,
+                                tint = Color(207, 6, 240)
+                            )
+                        },
                         label = {
                             Text(
                                 text = stringResource(id = R.string.email)
@@ -98,23 +98,30 @@ fun LoginScreen() {
                         }
                     )
 
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth(),
                         value = "",
                         onValueChange = {},
-                        shape = RoundedCornerShape(18.dp),
-                        leadingIcon = {Icon(
-                            painter = painterResource(id = R.drawable.baseline_lock_24),
-                            contentDescription = null,
-                            tint = Color(207, 6, 240)
-                        )},
+                        shape = RoundedCornerShape(16.dp),
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.baseline_lock_24),
+                                contentDescription = null,
+                                tint = Color(207, 6, 240)
+                            )
+                        },
                         label = {
                             Text(
                                 text = stringResource(id = R.string.password)
                             )
                         }
                     )
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -124,13 +131,38 @@ fun LoginScreen() {
                             onClick = { /*TODO*/ }, shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(Color(207, 6, 240))
                         ) {
-                            Text(
-                                text = stringResource(id = R.string.sign_in),
-                                color = Color.White
-                            )
+                            Row() {
+                                Text(
+                                    text = stringResource(id = R.string.sign_in).uppercase(),
+                                    color = Color.White
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        id = R.drawable.baseline_arrow_forward_24
+                                    ),
+                                    contentDescription = "",
+                                    tint = Color.White
+                                )
+                            }
+
                         }
 
-                        Text(text = stringResource(id = R.string.no_account))
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        Row() {
+                            Text(
+                                text = stringResource(id = R.string.no_account),
+                                fontSize = 12.sp,
+                                color = Color(160, 156, 156))
+
+                            Spacer(modifier = Modifier.width(2.dp))
+
+                            Text(text = stringResource(id = R.string.sign_up),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(207, 6, 240),
+                            )
+                        }
                     }
                 }
             }
@@ -138,9 +170,9 @@ fun LoginScreen() {
             Surface(
                 modifier = Modifier
                     .height(40.dp)
-                    .width(100.dp),
+                    .width(120.dp),
                 color = Color(207, 6, 240),
-                shape = RoundedCornerShape(topEnd = 12.dp)
+                shape = RoundedCornerShape(topEnd = 16.dp)
             ) {}
         }
     }
