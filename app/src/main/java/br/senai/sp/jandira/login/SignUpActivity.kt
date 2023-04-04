@@ -1,15 +1,20 @@
 package br.senai.sp.jandira.login
 
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.login.components.BottomShape
+import br.senai.sp.jandira.login.components.TopShape
 import br.senai.sp.jandira.login.ui.theme.LoginTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -49,13 +56,7 @@ fun SignUpScreen() {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Surface(
-                    modifier = Modifier
-                        .height(40.dp)
-                        .width(120.dp),
-                    color = Color(207, 6, 240),
-                    shape = RoundedCornerShape(bottomStart = 16.dp)
-                ) {}
+                TopShape()
             }
 
             Column(
@@ -74,7 +75,44 @@ fun SignUpScreen() {
                     color = Color(160, 156, 156)
                 )
 
-                Spacer(modifier = Modifier.height(45.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .align(alignment = Alignment.TopEnd),
+                        shape = CircleShape,
+                        border = BorderStroke(
+                            width = 1.dp,
+                            Brush.horizontalGradient(
+                                listOf(Color.Magenta, Color.White)
+                            )
+                        )
+                    ) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.profile),
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp)
+                        )
+
+                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.camera_plus),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .offset(x = 0.dp, y = 0.dp)
+                            .size(28.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
                 //FORM
                 Column() {
@@ -169,8 +207,10 @@ fun SignUpScreen() {
 
                     Row() {
                         Checkbox(checked = false, onCheckedChange = {})
-                        Text(text = stringResource(id = R.string.over_18),
-                        modifier = Modifier.padding(top = 15.dp))
+                        Text(
+                            text = stringResource(id = R.string.over_18),
+                            modifier = Modifier.padding(top = 15.dp)
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(21.dp))
@@ -183,7 +223,8 @@ fun SignUpScreen() {
                         Button(
                             onClick = { /*TODO*/ }, shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(Color(207, 6, 240)),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(48.dp)
                         ) {
                             Row() {
@@ -218,17 +259,11 @@ fun SignUpScreen() {
                     }
 
 
-
                 }
             }
 
-            Surface(
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(120.dp),
-                color = Color(207, 6, 240),
-                shape = RoundedCornerShape(topEnd = 16.dp)
-            ) {}
+            BottomShape()
+
         }
     }
 }

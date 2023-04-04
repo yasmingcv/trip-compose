@@ -114,7 +114,7 @@ fun HomeScreen() {
 
             //parei aqui :)
             LazyRow(){
-                items()
+                //items()
             }
         }
 
