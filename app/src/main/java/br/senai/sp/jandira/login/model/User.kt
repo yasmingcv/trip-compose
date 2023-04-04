@@ -11,5 +11,4 @@ data class User(
     var email: String = "",
     var password: String = "",
     var isOver18: Boolean = false
-
 )
