@@ -12,4 +12,11 @@ class UserRepository(context: Context) {
         return db.userDao().save(user)
     }
 
+    fun findUserByEmail(email: String): User {
+        return  db.userDao().findUserByEmail(email)
+    }
+
+    fun authenticate(email: String, password: String): User {
+        return db.userDao().authenticate(email, password)
+    }
 }

@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,11 +10,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.PanoramaFishEye
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.login.components.BottomShape
 import br.senai.sp.jandira.login.components.TopShape
+import br.senai.sp.jandira.login.repository.UserRepository
 import br.senai.sp.jandira.login.ui.theme.LoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,6 +43,20 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreen() {
+
+    val context = LocalContext.current
+
+    var emailState by remember {
+        mutableStateOf("")
+    }
+    var passwordState by remember {
+        mutableStateOf("")
+    }
+
+    var passwordVisibilityState by remember {
+        mutableStateOf(false)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -77,8 +97,8 @@ fun LoginScreen() {
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        value = "",
-                        onValueChange = {},
+                        value = emailState,
+                        onValueChange = { emailState = it },
                         shape = RoundedCornerShape(16.dp),
                         leadingIcon = {
                             Icon(
@@ -99,8 +119,8 @@ fun LoginScreen() {
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        value = "",
-                        onValueChange = {},
+                        value = passwordState,
+                        onValueChange = { passwordState = it },
                         shape = RoundedCornerShape(16.dp),
                         leadingIcon = {
                             Icon(
@@ -108,6 +128,20 @@ fun LoginScreen() {
                                 contentDescription = null,
                                 tint = Color(207, 6, 240)
                             )
+                        },
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                passwordVisibilityState = !passwordVisibilityState
+                            }) {
+                                Icon(
+                                    imageVector =
+                                        if(passwordVisibilityState)
+                                            Icons.Default.VisibilityOff
+                                        else
+                                            Icons.Default.Visibility,
+                                    contentDescription = ""
+                                )
+                            }
                         },
                         label = {
                             Text(
@@ -124,7 +158,10 @@ fun LoginScreen() {
                         horizontalAlignment = Alignment.End
                     ) {
                         Button(
-                            onClick = { /*TODO*/ }, shape = RoundedCornerShape(16.dp),
+                            onClick = {
+                                authenticate(emailState, passwordState, context)
+                            },
+                            shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(Color(207, 6, 240))
                         ) {
                             Row() {
@@ -145,19 +182,30 @@ fun LoginScreen() {
 
                         Spacer(modifier = Modifier.height(32.dp))
 
-                        Row() {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Text(
                                 text = stringResource(id = R.string.no_account),
                                 fontSize = 12.sp,
-                                color = Color(160, 156, 156))
+                                color = Color(160, 156, 156)
+                            )
 
                             Spacer(modifier = Modifier.width(2.dp))
 
-                            Text(text = stringResource(id = R.string.sign_up),
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(207, 6, 240),
-                            )
+                            TextButton(
+                                onClick = {
+                                    var openSignUp = Intent(context, SignUpActivity::class.java)
+                                    context.startActivity(openSignUp)
+                                }
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.sign_up),
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(207, 6, 240),
+                                )
+                            }
                         }
                     }
                 }
@@ -167,4 +215,22 @@ fun LoginScreen() {
 
         }
     }
+}
+
+fun authenticate(
+    email: String,
+    password: String,
+    context: Context
+) {
+    val userRepository = UserRepository(context)
+    val user = userRepository.authenticate(
+        email,
+        password
+    )
+
+    if (user != null) {
+        val openHome = Intent(context, HomeActivity::class.java)
+        context.startActivity(openHome)
+    }
+
 }

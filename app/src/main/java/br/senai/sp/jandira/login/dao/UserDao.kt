@@ -7,15 +7,17 @@ import br.senai.sp.jandira.login.model.User
 interface UserDao {
 
     @Insert
-    fun save(user: User): Long //retorna o id
+    fun save(user: User): Long //return the id
 
     @Update
-    fun update(user: User): Int // retorna quantos usuários foram atualizados
+    fun update(user: User): Int // return how much users were updated
 
     @Delete
-    fun delete(user: User): Int // retorna quantos usuários foram deletados
+    fun delete(user: User): Int // return how much users were found
 
     @Query("SELECT * FROM tbl_user WHERE email = :email")
-    fun findUserByEmail(email: String): User // retorna o usuário encontrado
+    fun findUserByEmail(email: String): User // return the user found
 
+    @Query("SELECT * FROM tbl_user WHERE email = :email AND password = :password")
+    fun authenticate(email: String, password: String): User // return the user found
 }
